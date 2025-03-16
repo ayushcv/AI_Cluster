@@ -406,7 +406,7 @@ body {
   margin: 10px auto;
   max-width: 80%;
   font-size: 0.9rem;
-  color: var (--system-msg-color);
+  color: var(--system-msg-color);
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   animation: fadeIn 0.5s ease;
@@ -601,6 +601,209 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Typing bubble animation */
+.typing-bubble {
+  background-color: var(--ai-msg-bg);
+  border: 2px solid var(--secondary-color);
+  border-radius: 0.2rem 1.2rem 1.2rem 1.2rem;
+  padding: 14px 16px;
+  margin: 12px 0;
+  display: inline-block;
+  position: relative;
+  max-width: 60%;
+  min-width: 120px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease, pulse 2s ease-in-out infinite;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+/* Agent-specific typing bubble styles */
+.typing-bubble.agent_math {
+  border-color: #8b5cf6;
+  border-width: 2px;
+  background: linear-gradient(to bottom right, var(--ai-msg-bg), rgba(139, 92, 246, 0.05));
+}
+
+.typing-bubble.agent_coding {
+  border-color: #10b981;
+}
+
+.typing-bubble.agent_creative {
+  border-color: #f59e0b;
+}
+
+.typing-bubble-icon {
+  position: absolute;
+  top: -15px;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--ai-msg-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  z-index: 2;
+  border: 2px solid var(--secondary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: iconPulse 1.5s infinite alternate;
+}
+
+.typing-bubble.agent_math .typing-bubble-icon {
+  background-color: #8b5cf6;
+  border-color: #8b5cf6;
+  color: white;
+}
+
+.typing-bubble.agent_coding .typing-bubble-icon {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.typing-bubble.agent_creative .typing-bubble-icon {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: white;
+}
+
+.typing-bubble-dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+.typing-bubble-dot {
+  background-color: var(--secondary-color);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 3px;
+  animation: typingBubble 1.4s infinite ease-in-out both;
+}
+
+/* Agent-specific dot colors */
+.agent_math .typing-bubble-dot {
+  background-color: #8b5cf6;
+}
+
+.agent_coding .typing-bubble-dot {
+  background-color: #10b981;
+}
+
+.agent_creative .typing-bubble-dot {
+  background-color: #f59e0b;
+}
+
+/* Special animations for different expert agents */
+.typing-bubble-code-animation {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #10b981;
+  overflow: hidden;
+  width: 0;
+  white-space: nowrap;
+  border-right: 2px solid #10b981;
+  animation: typing 3.5s steps(30, end) infinite;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.typing-bubble-math-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0 10px;
+  height: 30px;
+  background-color: rgba(139, 92, 246, 0.05);
+  border-radius: var(--radius-md);
+  padding: 5px 10px;
+}
+
+.typing-bubble-math-animation span {
+  display: inline-block;
+  opacity: 0;
+  animation: mathSymbolAnimation 2.5s infinite;
+  margin: 0 4px;
+  font-family: 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #8b5cf6;
+  text-shadow: 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+.typing-bubble-creative-animation {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.typing-bubble-creative-animation .creative-icon {
+  transform-origin: center;
+  animation: spin 4s infinite linear;
+  margin: 0 3px;
+  font-size: 14px;
+}
+
+.typing-bubble-creative-animation .creative-icon:nth-child(2) {
+  animation-direction: reverse;
+  animation-duration: 3s;
+}
+
+.typing-bubble-creative-animation .creative-icon:nth-child(3) {
+  animation-duration: 5s;
+}
+
+/* Animation keyframes for specialized agent animations */
+@keyframes typing {
+  from { width: 0 }
+  50% { width: 100px }
+  70% { width: 100px }
+  to { width: 0 }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #10b981 }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-5px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mathSymbolAnimation {
+  0% { 
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  20% { 
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
+  40% { 
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+}
+
+@keyframes iconPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
 }
 
 /* Sidebar styling */
